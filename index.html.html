@@ -131,18 +131,21 @@
     50% { opacity:0.3; }
   }
   .hero h1 {
-    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-size: clamp(2rem, 4vw, 3.8rem);
     font-weight: 800;
-    line-height: 1;
+    line-height: 1.12;
     letter-spacing: -0.02em;
     margin-bottom: 1.5rem;
     animation: fadeUp 0.6s 0.1s ease both;
   }
-  .hero h1 .name { color: var(--purple2); }
-  .hero h1 .accent-word { 
+  .hero h1 .name { color: var(--purple2); display: block; font-size: clamp(2.8rem, 5.5vw, 5rem); line-height:1; margin-bottom: 0.15em; animation: glitch 6s 2s infinite; }
+  .hero h1 .subtitle-line { display: block; font-size: clamp(1.1rem, 2.2vw, 1.6rem); font-weight: 500; color: var(--text2); letter-spacing: 0.01em; margin-top: 0.3em; }
+  .hero h1 .accent-word {
     color: transparent;
     -webkit-text-stroke: 1px var(--purple);
   }
+  /* typewriter target */
+  #tw-target { color: var(--purple3); }
   .hero-desc {
     font-size: 1.05rem;
     color: var(--text2);
@@ -270,8 +273,73 @@
   .dot-sol { background: #9945ff; }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── FULL ANIMATION SYSTEM ── */
+
+  /* Typewriter cursor */
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+  .tw-cursor {
+    display: inline-block;
+    width: 3px; height: 0.85em;
+    background: var(--purple);
+    margin-left: 3px;
+    vertical-align: middle;
+    animation: blink 0.75s infinite;
+    border-radius: 1px;
+  }
+
+  /* Reveal wipe — curtain lifts left→right */
+  @keyframes revealWipe {
+    from { clip-path: inset(0 100% 0 0); opacity: 1; }
+    to   { clip-path: inset(0 0% 0 0);   opacity: 1; }
+  }
+  .wipe {
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  .wipe.go { animation: revealWipe 0.85s cubic-bezier(0.77,0,0.18,1) forwards; opacity: 1; }
+  .wipe.go.d1 { animation-delay: 0.1s; }
+  .wipe.go.d2 { animation-delay: 0.25s; }
+  .wipe.go.d3 { animation-delay: 0.4s; }
+
+  /* Scroll-reveal fade-slide (JS adds .sr-visible) */
+  .sr {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .sr.sr-visible { opacity: 1; transform: translateY(0); }
+
+  /* PFP float */
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+  }
+  .pfp-frame { animation: float 5s ease-in-out infinite; }
+
+  /* Glitch on hero name */
+  @keyframes glitch {
+    0%,94%,100% { text-shadow:none; transform:none; }
+    95% { text-shadow:-2px 0 var(--accent); transform:translateX(2px); }
+    96% { text-shadow:2px 0 var(--purple); transform:translateX(-2px); }
+    97% { text-shadow:none; transform:none; }
+  }
+
+  /* Stat pop */
+  @keyframes popIn {
+    0%  { opacity:0; transform:scale(0.5); }
+    70% { transform:scale(1.12); }
+    100%{ opacity:1; transform:scale(1); }
+  }
+
+  /* Chain pill stagger */
+  @keyframes slideInX {
+    from { opacity:0; transform:translateX(-14px); }
+    to   { opacity:1; transform:translateX(0); }
   }
 
   /* DIVIDER */
@@ -433,6 +501,134 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
   }
+  /* screenshot proof cards */
+  .proof-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+    cursor: pointer;
+  }
+  .proof-card:hover { border-color: var(--border2); transform: translateY(-4px); }
+  .proof-img-wrap {
+    width: 100%;
+    background: var(--bg2);
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .proof-img-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+  .proof-card:hover .proof-img-wrap img { transform: scale(1.02); }
+  .proof-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 3rem 2rem;
+    color: var(--text3);
+    font-size: 0.8rem;
+    font-family: 'Space Mono', monospace;
+    text-align: center;
+    width: 100%;
+    min-height: 200px;
+  }
+  .proof-placeholder-icon {
+    width: 44px; height: 44px;
+    background: var(--purple-dim);
+    border: 1px dashed var(--border2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .proof-expand-btn {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: rgba(8,8,16,0.7);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.65rem;
+    color: var(--purple3);
+    font-family: 'Space Mono', monospace;
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .proof-card:hover .proof-expand-btn { opacity: 1; }
+  .proof-meta {
+    padding: 1.2rem 1.4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .proof-avatar {
+    width: 36px; height: 36px;
+    background: var(--purple-dim);
+    border: 1px solid var(--border2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.78rem;
+    color: var(--purple2);
+    font-family: 'Space Mono', monospace;
+    flex-shrink: 0;
+  }
+  .proof-label { flex: 1; }
+  .proof-name { font-weight: 700; font-size: 0.88rem; margin-bottom: 2px; }
+  .proof-role { font-size: 0.72rem; color: var(--text3); }
+  .proof-platform {
+    font-size: 0.65rem;
+    font-family: 'Space Mono', monospace;
+    background: var(--purple-dim);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 3px 10px;
+    color: var(--purple3);
+  }
+  /* lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 12px; object-fit: contain; }
+  .lightbox-close {
+    position: fixed;
+    top: 1.5rem; right: 1.5rem;
+    width: 40px; height: 40px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1.1rem; color: var(--text2);
+  }
+  .lightbox-close:hover { border-color: var(--purple); color: var(--purple3); }
+  /* quote-style cards for text testimonials */
+  .quote-mark {
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--purple);
+    opacity: 0.3;
+    font-family: Georgia, serif;
+    margin-bottom: -1rem;
+  }
   .testimonial-card {
     background: var(--bg3);
     border: 1px solid var(--border);
@@ -442,14 +638,6 @@
     transition: border-color 0.2s;
   }
   .testimonial-card:hover { border-color: var(--border2); }
-  .quote-mark {
-    font-size: 4rem;
-    line-height: 1;
-    color: var(--purple);
-    opacity: 0.3;
-    font-family: Georgia, serif;
-    margin-bottom: -1rem;
-  }
   .testimonial-text {
     font-size: 0.92rem;
     color: var(--text2);
@@ -521,14 +709,18 @@
   .contact-link:hover { border-color: var(--purple); color: var(--purple3); transform: translateY(-2px); }
   .contact-link svg { width: 18px; height: 18px; flex-shrink: 0; }
   .hire-box {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
     background: var(--bg);
     border: 1px solid var(--border2);
     border-radius: 16px;
     padding: 2.5rem 3rem;
-    max-width: 500px;
+    max-width: 480px;
+    margin: 0 auto;
   }
-  .hire-box p { color: var(--text2); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.7; }
+  .hire-box p { color: var(--text2); font-size: 0.95rem; line-height: 1.7; text-align:center; margin:0; }
 
   /* FOOTER */
   footer {
@@ -543,8 +735,79 @@
   footer p { font-size: 0.8rem; color: var(--text3); font-family: 'Space Mono', monospace; }
   footer span { color: var(--purple); }
 
-  /* RESPONSIVE */
+  /* ACCORDION */
+  .accordion-list { display: flex; flex-direction: column; gap: 0.75rem; max-width: 860px; margin: 0 auto; }
+  .acc-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .acc-item:hover { border-color: var(--border2); }
+  .acc-trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    gap: 1rem;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+  }
+  .acc-trigger:hover { background: rgba(124,92,252,0.04); }
+  .acc-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+  }
+  .acc-icon {
+    width: 38px; height: 38px;
+    background: var(--purple-dim);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .acc-title { display: block; font-weight: 700; font-size: 0.95rem; }
+  .acc-subtitle { display: block; font-size: 0.75rem; color: var(--text3); margin-top: 2px; }
+  .acc-arrow {
+    font-size: 1.4rem;
+    color: var(--purple);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    line-height: 1;
+    font-weight: 300;
+  }
+  .acc-item.open .acc-arrow { transform: rotate(45deg); }
+  .acc-item.open { border-color: var(--border2); }
+  .acc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s;
+    padding: 0 1.4rem;
+  }
+  .acc-body-inner { padding-bottom: 1.4rem; border-top: 1px solid var(--border); padding-top: 1.2rem; }
+  .acc-body p { color: var(--text2); font-size: 0.9rem; line-height: 1.8; margin: 0; }
+  .proof-avatar-sm {
+    width: 38px; height: 38px;
+    border: 1px solid;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.78rem;
+    font-family: 'Space Mono', monospace;
+    flex-shrink: 0;
+  }
+
   @media (max-width: 900px) {
+    .accordion-list { gap: 0.6rem; }
+    .acc-trigger { padding: 1rem 1.1rem; }
+  }
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
     .hero { flex-direction: column-reverse; padding: 6rem 1.5rem 3rem; gap: 3rem; text-align: center; }
@@ -555,7 +818,6 @@
     .services { padding: 4rem 1.5rem; }
     .testimonials { padding: 4rem 1.5rem; }
     .contact { padding: 4rem 1.5rem; }
-    .section-divider { margin: 0 1.5rem; }
     footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
     .hire-box { padding: 1.5rem; }
   }
@@ -579,9 +841,9 @@
   <div class="hero-left">
     <div class="hero-tag">Available for hire &nbsp;·&nbsp; Web3 Operator</div>
     <h1>
-      I'm <span class="name">Boycrrypt</span><br/>
-      Your <span class="accent-word">Web3</span><br/>
-      Alpha Weapon
+      <span class="name">Boycrrypt</span>
+      Your <span class="accent-word">Web3</span> Alpha Weapon
+      <span class="subtitle-line"><span id="tw-target"></span><span class="tw-cursor"></span></span>
     </h1>
     <p class="hero-desc">
       Content creator, Community Manager, Collab & Partnership lead, BD strategist, NFT alpha hunter, and aspiring AI video creator. I plug into your project and make things move.
@@ -594,6 +856,18 @@
       <div class="chain-pill"><span class="chain-dot dot-eth"></span> Ethereum</div>
       <div class="chain-pill"><span class="chain-dot dot-base"></span> Base</div>
       <div class="chain-pill"><span class="chain-dot dot-sol"></span> Solana</div>
+      <div class="chain-pill"><span class="chain-dot" style="background:#e84142;"></span> Avalanche</div>
+      <div class="chain-pill"><span class="chain-dot" style="background:#f0b90b;"></span> BNB Chain</div>
+      <div class="chain-pill"><span class="chain-dot" style="background:#2bbfe0;"></span> Sui</div>
+      <div class="chain-pill"><span class="chain-dot" style="background:#00d4aa;"></span> TON</div>
+    </div>
+    <div class="chains" style="margin-top:0.6rem;">
+      <div class="chain-pill" style="border-color:rgba(252,92,248,0.4);background:rgba(252,92,248,0.06);color:var(--accent);">
+        <span style="font-size:0.75rem;">🤖</span> Virtual AI Agent OG
+      </div>
+      <div class="chain-pill" style="border-color:rgba(124,92,252,0.5);background:rgba(124,92,252,0.1);color:var(--purple2);">
+        <span style="font-size:0.75rem;">🌐</span> Open to Ambassador Roles
+      </div>
     </div>
   </div>
   <div class="hero-right">
@@ -614,28 +888,28 @@
 <!-- ABOUT -->
 <section class="about" id="about">
   <div>
-    <div class="section-label">About Me</div>
-    <h2>The Ninja Behind the Handle</h2>
-    <p>I operate at the intersection of web3 culture, community, and growth. Whether it's building communities from the ground up, securing high-value collabs, or putting out content that actually converts — I get it done.</p>
-    <p>My edge? I live in the ecosystem. I track NFT alpha in real time, understand what founders need before they ask, and communicate it in ways communities actually respond to.</p>
-    <p>Active across Base, Ethereum, and Solana — I know the culture of each chain and how to tailor messaging that hits.</p>
+    <div class="section-label sr">About Me</div>
+    <h2><span class="wipe">The Ninja Behind the Handle</span></h2>
+    <p class="sr">I operate at the intersection of web3 culture, community, and growth. Whether it's building communities from the ground up, securing high-value collabs, or putting out content that actually converts — I get it done.</p>
+    <p class="sr" style="transition-delay:0.1s;">My edge? I live in the ecosystem. I track NFT alpha in real time, understand what founders need before they ask, and communicate it in ways communities actually respond to. I'm also a <strong style="color:var(--purple2);">Virtual AI Agent OG</strong> — having worked across the Virtual Protocol ecosystem, the leading AI agent launchpad on Base, since early days.</p>
+    <p class="sr" style="transition-delay:0.2s;">Active across Ethereum, Base, Solana, Avalanche, BNB Chain, Sui, TON and more — I know the culture of each chain and can represent your project across any ecosystem. Also open to <strong style="color:var(--accent);">Ambassador roles</strong>.</p>
   </div>
   <div class="stats-grid">
     <div class="stat-card">
-      <div class="stat-num">3+</div>
-      <div class="stat-label">Chains Active</div>
+      <div class="stat-num">7+</div>
+      <div class="stat-label">Chains & Ecosystems</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num">100%</div>
-      <div class="stat-label">Culture Native</div>
+      <div class="stat-num" style="font-size:1.2rem;color:var(--accent);">AI OG</div>
+      <div class="stat-label">Virtual Protocol</div>
     </div>
     <div class="stat-card">
       <div class="stat-num">BD</div>
       <div class="stat-label">Growth Focused</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num">NFT</div>
-      <div class="stat-label">Alpha Hunter</div>
+      <div class="stat-num" style="font-size:1.1rem;color:var(--purple3);">Amb.</div>
+      <div class="stat-label">Open to Ambassador</div>
     </div>
   </div>
 </section>
@@ -645,71 +919,100 @@
 <!-- SERVICES -->
 <section class="services" id="services">
   <div class="services-header">
-    <div class="section-label" style="justify-content:center;">What I Bring</div>
-    <h2>Skills & Services</h2>
-    <p>End-to-end web3 operator. From first tweet to closed partnership deal.</p>
+    <div class="section-label sr" style="justify-content:center;">What I Bring</div>
+    <h2><span class="wipe">Skills & Services</span></h2>
+    <p class="sr" style="transition-delay:0.15s;">End-to-end web3 operator. From first tweet to closed partnership deal.</p>
   </div>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-icon">🥷</div>
-      <h3>Web3 Content Creation</h3>
-      <p>Threads, posts, narratives and storytelling that grow audiences and make projects stick in people's minds. Native tone, real engagement.</p>
-      <div class="service-tags">
-        <span class="tag">Twitter/X</span>
-        <span class="tag">Threads</span>
-        <span class="tag">Storytelling</span>
-      </div>
+  <div class="accordion-list">
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span class="acc-left"><span class="acc-icon">🥷</span> Web3 Content Creation</span>
+        <span class="acc-arrow">﹢</span>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner">
+        <p>Threads, posts, narratives and storytelling that grow audiences and make projects stick in people's minds. Native tone, real engagement.</p>
+        <div class="service-tags"><span class="tag">Twitter/X</span><span class="tag">Threads</span><span class="tag">Storytelling</span></div>
+      </div></div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🏛️</div>
-      <h3>Community Management</h3>
-      <p>Building, moderating and growing communities that stay active and engaged. Creating culture, managing sentiment, running activations.</p>
-      <div class="service-tags">
-        <span class="tag">Discord</span>
-        <span class="tag">Telegram</span>
-        <span class="tag">Engagement</span>
-      </div>
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span class="acc-left"><span class="acc-icon">🏛️</span> Community Management</span>
+        <span class="acc-arrow">﹢</span>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner">
+        <p>Building, moderating and growing communities that stay active and engaged. Creating culture, managing sentiment, running activations.</p>
+        <div class="service-tags"><span class="tag">Discord</span><span class="tag">Telegram</span><span class="tag">Engagement</span></div>
+      </div></div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🤝</div>
-      <h3>Collabs & Partnerships</h3>
-      <p>Identifying and closing strategic collaborations that expand reach and create value for both sides. I know who to talk to and how to pitch.</p>
-      <div class="service-tags">
-        <span class="tag">Outreach</span>
-        <span class="tag">BD</span>
-        <span class="tag">Deal Flow</span>
-      </div>
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span class="acc-left"><span class="acc-icon">🤝</span> Collabs & Partnerships</span>
+        <span class="acc-arrow">﹢</span>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner">
+        <p>Identifying and closing strategic collaborations that expand reach and create value for both sides. I know who to talk to and how to pitch.</p>
+        <div class="service-tags"><span class="tag">Outreach</span><span class="tag">BD</span><span class="tag">Deal Flow</span></div>
+      </div></div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">📡</div>
-      <h3>NFT Alpha & Research</h3>
-      <p>Real-time NFT alpha, market research and on-chain intel across ETH, Base and Solana. I spot what's moving before the crowd catches on.</p>
-      <div class="service-tags">
-        <span class="tag">NFT</span>
-        <span class="tag">Alpha</span>
-        <span class="tag">On-chain</span>
-      </div>
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span class="acc-left"><span class="acc-icon">📡</span> NFT Alpha & Research</span>
+        <span class="acc-arrow">﹢</span>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner">
+        <p>Real-time NFT alpha, market research and on-chain intel across ETH, Base and Solana. I spot what's moving before the crowd catches on.</p>
+        <div class="service-tags"><span class="tag">NFT</span><span class="tag">Alpha</span><span class="tag">On-chain</span></div>
+      </div></div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">📈</div>
-      <h3>Business Development</h3>
-      <p>Strategic growth conversations, ecosystem positioning and identifying revenue opportunities for early-stage web3 projects.</p>
-      <div class="service-tags">
-        <span class="tag">Growth</span>
-        <span class="tag">Strategy</span>
-        <span class="tag">BD</span>
-      </div>
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span class="acc-left"><span class="acc-icon">📈</span> Business Development</span>
+        <span class="acc-arrow">﹢</span>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner">
+        <p>Strategic growth conversations, ecosystem positioning and identifying revenue opportunities for early-stage web3 projects.</p>
+        <div class="service-tags"><span class="tag">Growth</span><span class="tag">Strategy</span><span class="tag">BD</span></div>
+      </div></div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🎬</div>
-      <h3>AI Video Content</h3>
-      <p>Emerging AI video creation for web3 projects — explainers, teasers, and content that cuts through noise on social feeds.</p>
-      <div class="service-tags">
-        <span class="tag">AI Video</span>
-        <span class="tag">Content</span>
-        <span class="tag">Social</span>
-      </div>
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span class="acc-left"><span class="acc-icon">🎬</span> AI Video Content</span>
+        <span class="acc-arrow">﹢</span>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner">
+        <p>Emerging AI video creation for web3 projects — explainers, teasers, and content that cuts through noise on social feeds.</p>
+        <div class="service-tags"><span class="tag">AI Video</span><span class="tag">Content</span><span class="tag">Social</span></div>
+      </div></div>
     </div>
+
+    <div class="acc-item" style="border-color:rgba(252,92,248,0.25);">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span class="acc-left"><span class="acc-icon" style="border-color:rgba(252,92,248,0.3);background:rgba(252,92,248,0.06);">🤖</span> Virtual AI Agent OG</span>
+        <span class="acc-arrow">﹢</span>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner">
+        <p>Early adopter and active participant in the Virtual Protocol ecosystem — the leading AI agent launchpad on Base. Deep knowledge of AI agent culture, projects, and alpha.</p>
+        <div class="service-tags"><span class="tag" style="color:var(--accent);border-color:rgba(252,92,248,0.3);">Virtual Protocol</span><span class="tag">AI Agents</span><span class="tag">Base</span></div>
+      </div></div>
+    </div>
+
+    <div class="acc-item" style="border-color:rgba(124,92,252,0.35);">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span class="acc-left"><span class="acc-icon" style="border-color:rgba(124,92,252,0.4);background:rgba(124,92,252,0.1);">🌐</span> Brand Ambassador</span>
+        <span class="acc-arrow">﹢</span>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner">
+        <p>Available for ambassador roles across web3 ecosystems. I represent projects authentically — with genuine conviction, real reach, and community trust across multiple chains.</p>
+        <div class="service-tags"><span class="tag">Ambassador</span><span class="tag">Multi-chain</span><span class="tag">Brand Rep</span></div>
+      </div></div>
+    </div>
+
   </div>
 </section>
 
@@ -718,53 +1021,85 @@
 <!-- TESTIMONIALS -->
 <section class="testimonials" id="testimonials">
   <div class="testimonials-header">
-    <div class="section-label" style="justify-content:center;">Social Proof</div>
-    <h2>What They Say</h2>
+    <div class="section-label sr" style="justify-content:center;">Real Proof</div>
+    <h2><span class="wipe">What They Say</span></h2>
+    <p class="sr" style="color:var(--text2);max-width:480px;margin:0 auto;font-size:0.9rem;transition-delay:0.15s;">Real feedback from real founders and teams I've worked with.</p>
   </div>
-  <div class="testimonials-grid">
-    <div class="testimonial-card">
-      <div class="quote-mark">"</div>
-      <p class="testimonial-text">Boycrrypt brought real energy to our community. The engagement went up fast and the alpha drops he shared kept holders excited and informed. A true web3 native.</p>
-      <div class="testimonial-author">
-        <div class="author-avatar">AK</div>
-        <div>
-          <div class="author-name">Add your testimonial here</div>
-          <div class="author-role">Founder — Update with real feedback</div>
-        </div>
-      </div>
+
+  <div class="accordion-list">
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span class="acc-left">
+          <span class="proof-avatar-sm" style="background:linear-gradient(135deg,rgba(124,92,252,0.2),rgba(252,92,248,0.2));border-color:rgba(252,92,248,0.3);color:var(--accent);">MX</span>
+          <span>
+            <span class="acc-title">Neon Wight — Moxie AI</span>
+            <span class="acc-subtitle">Growth Strategist & Community Manager</span>
+          </span>
+        </span>
+        <span class="acc-arrow">﹢</span>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner">
+        <div style="font-size:2rem;line-height:1;color:var(--purple);opacity:0.25;font-family:Georgia,serif;margin-bottom:0.5rem;">"</div>
+        <p style="font-style:italic;color:var(--text2);line-height:1.8;">Boycrypt played a key role in strengthening our community and driving consistent engagement. His understanding of Web3 growth and audience positioning made a real impact on our ecosystem.</p>
+        <span class="proof-platform" style="display:inline-block;margin-top:1rem;">Web3</span>
+      </div></div>
     </div>
-    <div class="testimonial-card">
-      <div class="quote-mark">"</div>
-      <p class="testimonial-text">The collab deals he closed opened us to communities we'd have taken months to reach on our own. He knows the space, he knows the people, and he delivers.</p>
-      <div class="testimonial-author">
-        <div class="author-avatar">BM</div>
-        <div>
-          <div class="author-name">Add your testimonial here</div>
-          <div class="author-role">Co-founder — Update with real feedback</div>
-        </div>
-      </div>
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span class="acc-left">
+          <span class="proof-avatar-sm" style="background:linear-gradient(135deg,rgba(55,138,221,0.2),rgba(124,92,252,0.2));border-color:rgba(55,138,221,0.3);color:#378add;">AR</span>
+          <span>
+            <span class="acc-title">Dennis & Team — ArAIstotle</span>
+            <span class="acc-subtitle">Moderator · Community Manager · X Scouting</span>
+          </span>
+        </span>
+        <span class="acc-arrow">﹢</span>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner">
+        <div style="font-size:2rem;line-height:1;color:var(--purple);opacity:0.25;font-family:Georgia,serif;margin-bottom:0.5rem;">"</div>
+        <p style="font-style:italic;color:var(--text2);line-height:1.8;">Reliable, proactive, and deeply committed to the mission. Boycrypt has consistently supported community growth and helped scout quality contributors across X and the ecosystem.</p>
+        <span class="proof-platform" style="display:inline-block;margin-top:1rem;">AI · Web3</span>
+      </div></div>
     </div>
-    <div class="testimonial-card">
-      <div class="quote-mark">"</div>
-      <p class="testimonial-text">Boycrrypt doesn't just post — he understands the narrative. Our content started actually converting once he took over. Worth every bit of the investment.</p>
-      <div class="testimonial-author">
-        <div class="author-avatar">LR</div>
-        <div>
-          <div class="author-name">Add your testimonial here</div>
-          <div class="author-role">CMO — Update with real feedback</div>
-        </div>
-      </div>
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span class="acc-left">
+          <span class="proof-avatar-sm" style="background:linear-gradient(135deg,rgba(29,158,117,0.2),rgba(124,92,252,0.15));border-color:rgba(29,158,117,0.3);color:#1d9e75;">NW</span>
+          <span>
+            <span class="acc-title">Core Team — NAWA World ($NAWA)</span>
+            <span class="acc-subtitle">Content Creator · Pre-TGE</span>
+          </span>
+        </span>
+        <span class="acc-arrow">﹢</span>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner">
+        <div style="font-size:2rem;line-height:1;color:var(--purple);opacity:0.25;font-family:Georgia,serif;margin-bottom:0.5rem;">"</div>
+        <p style="font-style:italic;color:var(--text2);line-height:1.8;">Boycrypt contributed quality content and helped drive awareness during early growth. His consistency and delivery helped position the project before TGE.</p>
+        <span class="proof-platform" style="display:inline-block;margin-top:1rem;">Token · Web3</span>
+      </div></div>
     </div>
+
   </div>
+
+  <p style="text-align:center;margin-top:2rem;font-size:0.8rem;color:var(--text3);font-family:'Space Mono',monospace;">* References available upon request.</p>
 </section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-close" onclick="closeLightbox()">✕</div>
+  <img id="lightbox-img" src="" alt="Proof screenshot"/>
+</div>
 
 <div class="section-divider"></div>
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
-  <div class="section-label" style="justify-content:center;">Get In Touch</div>
-  <h2>Ready to <span>work together?</span></h2>
-  <p>Whether you need a community manager, a content strategist, a collab lead, or all three — let's talk. I'm available for new projects.</p>
+  <div class="section-label sr" style="justify-content:center;">Get In Touch</div>
+  <h2><span class="wipe">Ready to</span> <span class="wipe d1"><span>work together?</span></span></h2>
+  <p class="sr" style="transition-delay:0.2s;">Whether you need a community manager, a content strategist, a collab lead, or all three — let's talk. I'm available for new projects.</p>
   <div class="contact-links">
     <a href="https://x.com/Boycrrypt/" class="contact-link" target="_blank">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.258 5.632 5.906-5.632Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -784,15 +1119,194 @@
     </a>
   </div>
   <div class="hire-box">
-    <p>Looking for a web3 operator who's already embedded in the ecosystem? I bring the network, the content skills, and the alpha — all in one package.</p>
-    <a href="mailto:boycrrypt@gmail.com" class="btn-primary">Send a Message</a>
+    <div style="font-size:1.8rem;margin-bottom:0.5rem;">📅</div>
+    <p>Prefer a direct conversation? Book a call and let's talk about what you're building.</p>
+    <a href="https://calendly.com/boycryptt" target="_blank" class="btn-primary">Book a Call →</a>
   </div>
 </section>
 
 <footer>
-  <p>© 2025 <span>Boycrrypt</span>. All rights reserved.</p>
+  <p>© 2026 <span>Boycrrypt</span>. All rights reserved.</p>
   <p>Built for the web<span>3</span> era.</p>
 </footer>
 
+<script>
+  /* ── 1. TYPEWRITER — hero subtitle cycles through roles ── */
+  const phrases = [
+    'Content Creator',
+    'Community Manager',
+    'Collab & BD Lead',
+    'NFT Alpha Hunter',
+    'Virtual AI Agent OG',
+    'Brand Ambassador',
+    'Web3 Operator'
+  ];
+  let pi = 0, ci = 0, deleting = false;
+  const twEl = document.getElementById('tw-target');
+  function typeWriter() {
+    const phrase = phrases[pi];
+    if (!deleting) {
+      twEl.textContent = phrase.slice(0, ++ci);
+      if (ci === phrase.length) { deleting = true; setTimeout(typeWriter, 1800); return; }
+      setTimeout(typeWriter, 75);
+    } else {
+      twEl.textContent = phrase.slice(0, --ci);
+      if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(typeWriter, 300); return; }
+      setTimeout(typeWriter, 38);
+    }
+  }
+  setTimeout(typeWriter, 900);
+
+  /* ── 2. SCROLL OBSERVER — wipe + sr reveals ── */
+  const wipeObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('go');
+        wipeObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.wipe').forEach(el => wipeObs.observe(el));
+
+  const srObs = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('sr-visible'), i * 60);
+        srObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.sr').forEach(el => srObs.observe(el));
+
+  /* ── 3. STAT CARDS — number counter pop on scroll ── */
+  const statObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const num = entry.target.querySelector('.stat-num');
+        if (num) { num.style.animation = 'none'; num.offsetHeight; num.style.animation = 'popIn 0.5s ease forwards'; }
+        statObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('.stat-card').forEach(el => statObs.observe(el));
+
+  /* ── 4. CHAIN PILLS — staggered slide-in ── */
+  document.querySelectorAll('.chain-pill').forEach((pill, i) => {
+    pill.style.opacity = '0';
+    pill.style.animation = 'none';
+    setTimeout(() => {
+      pill.style.animation = `slideInX 0.45s ${0.7 + i * 0.08}s ease both`;
+      pill.style.opacity = '';
+    }, 50);
+  });
+
+  /* ── 5. ACC ITEMS — stagger on scroll ── */
+  const accObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const items = entry.target.querySelectorAll('.acc-item');
+        items.forEach((item, i) => {
+          item.style.opacity = '0';
+          item.style.transform = 'translateY(20px)';
+          setTimeout(() => {
+            item.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.2s';
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+          }, i * 70);
+        });
+        accObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.accordion-list').forEach(el => accObs.observe(el));
+
+  /* ── 6. ACCORDION TOGGLE ── */
+  function toggleAcc(btn) {
+    const item = btn.closest('.acc-item');
+    const body = item.querySelector('.acc-body');
+    const inner = item.querySelector('.acc-body-inner');
+    const isOpen = item.classList.contains('open');
+    if (isOpen) {
+      body.style.maxHeight = '0';
+      body.style.padding = '0 1.4rem';
+      item.classList.remove('open');
+    } else {
+      body.style.padding = '0 1.4rem';
+      body.style.maxHeight = inner.scrollHeight + 'px';
+      item.classList.add('open');
+    }
+  }
+
+  /* ── 7. CONTACT LINKS — fade in stagger ── */
+  const contactObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.contact-link').forEach((link, i) => {
+          link.style.opacity = '0';
+          link.style.transform = 'translateY(16px)';
+          setTimeout(() => {
+            link.style.transition = 'opacity 0.4s ease, transform 0.4s ease, border-color 0.2s, color 0.2s';
+            link.style.opacity = '1';
+            link.style.transform = 'translateY(0)';
+          }, i * 100);
+        });
+        contactObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.contact-links').forEach(el => contactObs.observe(el));
+
+  /* ── 8. SMOOTH SCROLL fix for all anchors ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  /* ── 9. ACTIVE NAV on scroll ── */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.style.color = '');
+        const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+        if (active) active.style.color = 'var(--purple2)';
+      }
+    });
+  }, { threshold: 0.3 }).observe.apply(null, []);
+  sections.forEach(s => {
+    new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => a.style.color = '');
+          const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+          if (active) active.style.color = 'var(--purple2)';
+        }
+      });
+    }, { threshold: 0.3 }).observe(s);
+  });
+
+  /* ── 10. LIGHTBOX ── */
+  function openLightbox(id) {
+    const img = document.getElementById(id);
+    if (!img || img.tagName !== 'IMG') return;
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  /* ── 11. CURSOR GLOW ── */
+  const glow = document.createElement('div');
+  glow.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(124,92,252,0.07) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left 0.06s,top 0.06s;';
+  document.body.appendChild(glow);
+  document.addEventListener('mousemove', e => { glow.style.left = e.clientX+'px'; glow.style.top = e.clientY+'px'; });
+</script>
 </body>
 </html>
