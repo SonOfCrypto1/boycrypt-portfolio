@@ -419,8 +419,119 @@ h2.sh {
 .calendly-box p { color: var(--muted); font-size: 0.9rem; text-align: left; }
 .calendly-box p strong { color: var(--text); display: block; margin-bottom: 3px; }
 
-/* ── FOOTER ── */
-footer {
+/* ── CASE STUDIES ── */
+.case-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.case-card {
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 18px;
+  padding: 2rem;
+  position: relative; overflow: hidden;
+}
+.case-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--purple), var(--purple3));
+}
+.case-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; color: var(--purple3);
+  letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.case-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.6rem; font-weight: 700;
+  color: var(--white); letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+.case-block { margin-bottom: 1.2rem; }
+.case-step-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; color: var(--muted);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.case-text { font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
+.case-results { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem; }
+.case-result-item { display: flex; flex-direction: column; gap: 2px; }
+.case-num {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.5rem; font-weight: 700;
+  color: var(--purple3); letter-spacing: -0.01em; line-height: 1;
+}
+.case-result-label { font-size: 0.78rem; color: var(--muted); }
+
+/* ── PROCESS ── */
+.process { padding: 8rem 4rem; }
+.process-inner { max-width: 720px; }
+.process-steps { display: flex; flex-direction: column; gap: 0; }
+.process-step {
+  display: flex; align-items: flex-start; gap: 1.5rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+  position: relative;
+}
+.process-step:last-child { border-bottom: none; }
+.process-step:hover .process-num { color: var(--purple3); }
+.process-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem; color: var(--dim);
+  letter-spacing: 0.08em; min-width: 28px;
+  padding-top: 3px; transition: color 0.2s;
+}
+.process-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.1rem; font-weight: 600;
+  color: var(--white); letter-spacing: -0.01em;
+  margin-bottom: 0.3rem;
+}
+.process-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+/* ── ADDITIONAL CAPABILITIES ── */
+.add-cap {
+  margin-top: 3rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.6rem 1.8rem;
+  max-width: 800px;
+}
+.add-cap-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; color: var(--muted);
+  letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.add-cap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+.add-cap-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.82rem; color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+.add-cap-item span { font-size: 1rem; }
+
+/* ── CONTACT CTA ROW ── */
+.contact-cta-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.5rem; flex-wrap: wrap; margin-top: 0;
+}
+
+@media (max-width: 900px) {
+  .case-grid { grid-template-columns: 1fr; }
+  .process { padding: 4rem 1.4rem; }
+  .add-cap-grid { grid-template-columns: 1fr 1fr; }
+  .contact-cta-row { flex-direction: column; }
+}
   padding: 2rem 4rem;
   border-top: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between;
@@ -485,6 +596,7 @@ footer span { color: var(--purple3); }
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#pow">Results</a></li>
+    <li><a href="#process">Process</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -497,22 +609,22 @@ footer span { color: var(--purple3); }
     <div class="hero-tag">Web3 Growth Operator · Available for Hire</div>
     <h1>
       <span class="line-white">Your go-to</span>
-      <span class="line-purple"><span id="tw-target"></span><span class="tw-cursor"></span></span>
-      <span class="line-outline">Web3 guy.</span>
+      <span class="line-purple">all-round Web3</span>
+      <span class="line-outline">growth guy.</span>
     </h1>
     <p class="hero-desc">
-      I <strong>combine data, research, creative thinking</strong> and unconventional marketing to help good Web3 projects grow. From community and content to collabs, prediction markets and ambassadorships. I understand the product, study the numbers and find the angle that works.
+      I <strong>combine data, research, creativity and hands-on execution</strong> to help Web3 projects turn attention into community, users and growth. I don't just execute marketing. I understand the product, study the data, find the opportunity and figure out how to make it work.
     </p>
     <div class="hero-cta">
       <a href="#pow" class="btn-p">See My Results</a>
-      <a href="#contact" class="btn-ghost">Get in Touch</a>
+      <a href="#contact" class="btn-ghost">Work With Me</a>
     </div>
     <div class="roles">
-      <div class="role-pill"><span></span> Community Manager</div>
-      <div class="role-pill"><span></span> Content Strategist</div>
-      <div class="role-pill"><span></span> Collab & Partnerships</div>
-      <div class="role-pill"><span></span> Prediction Markets</div>
-      <div class="role-pill"><span></span> Ambassador</div>
+      <div class="role-pill"><span></span> Community Management</div>
+      <div class="role-pill"><span></span> Content & Growth Strategy</div>
+      <div class="role-pill"><span></span> Partnerships & KOLs</div>
+      <div class="role-pill"><span></span> User Acquisition</div>
+      <div class="role-pill"><span></span> Ambassador Marketing</div>
     </div>
   </div>
   <div class="hero-right">
@@ -536,12 +648,12 @@ footer span { color: var(--purple3); }
   <div class="about-body">
     <div class="section-label sr">About</div>
     <h2 class="sh"><span class="wipe">Sharp thinking.</span><span class="wipe" style="animation-delay:0.15s;">Real results.</span></h2>
-    <p class="sr" style="transition-delay:0.1s;">I'm a passionate Web3 community builder and growth strategist with a proven track record of scaling projects from the ground up. With deep knowledge of decentralised communities and Web3 culture, I bridge the gap between projects and their users.</p>
-    <p class="sr" style="transition-delay:0.2s;">I think strategically, <strong>study the data</strong>, research competitors and look for unconventional ways to turn attention into community, users and growth.</p>
-    <p class="sr" style="transition-delay:0.3s;">Active across Base, Ethereum, Solana and more. Virtual Protocol OG. Former HeyElsa Ambassador. Current WahooPredict Ambassador.</p>
+    <p class="sr" style="transition-delay:0.1s;">I'm a passionate Web3 community builder and growth strategist with a proven track record of scaling projects from the ground up. With deep knowledge of decentralized communities and Web3 culture, I bridge the gap between projects and their users.</p>
+    <p class="sr" style="transition-delay:0.2s;">I combine <strong>data, research, creativity and hands-on execution</strong> to help Web3 projects turn attention into community, users and growth.</p>
+    <p class="sr" style="transition-delay:0.3s;">I don't believe in blindly copying what everyone else is doing. I study the project, its competitors and the data, then look for unconventional ways to make it work.</p>
     <div class="about-chips sr" style="transition-delay:0.35s;">
-      <span class="chip active">Virtual Protocol OG</span>
       <span class="chip active">WahooPredict Ambassador</span>
+      <span class="chip active">Early Virtuals Protocol Contributor</span>
       <span class="chip">Former HeyElsa Ambassador</span>
       <span class="chip">Amplifi Creator</span>
       <span class="chip">Base · ETH · Solana</span>
@@ -573,59 +685,159 @@ footer span { color: var(--purple3); }
 <section class="pow" id="pow">
   <div class="pow-header">
     <div class="section-label sr">Proof of Work</div>
-    <h2 class="sh"><span class="wipe">Numbers don't</span><span class="wipe" style="animation-delay:0.15s;">lie.</span></h2>
-    <p class="sr" style="transition-delay:0.1s;">Real results across real projects. No inflated claims. Just what actually happened.</p>
+    <h2 class="sh"><span class="wipe">Receipts,</span><span class="wipe" style="animation-delay:0.15s;">not promises.</span></h2>
+    <p class="sr" style="transition-delay:0.1s;">Real numbers across real projects. No inflated claims. Just what actually happened.</p>
   </div>
   <div class="pow-grid">
 
     <div class="pow-card sr">
       <div class="pow-num">$500K+</div>
-      <p class="pow-desc">Referral volume generated on Virtuals Protocol, earning $1.2K+ in rewards between Aug–Dec 2025.</p>
+      <p class="pow-desc">Referral volume generated on Virtuals Protocol, earning $1.2K+ in rewards between Aug and Dec 2025.</p>
       <span class="pow-tag">Virtuals Protocol</span>
     </div>
 
     <div class="pow-card sr" style="transition-delay:0.07s;">
       <div class="pow-num green">$10K+</div>
-      <p class="pow-desc">Direct & indirect referral volume generated on Wasabi Protocol.</p>
+      <p class="pow-desc">Direct and indirect referral volume generated on Wasabi Protocol.</p>
       <span class="pow-tag">Wasabi Protocol</span>
     </div>
 
     <div class="pow-card sr" style="transition-delay:0.14s;">
       <div class="pow-num amber">$2K+</div>
-      <p class="pow-desc">Direct & indirect referral volume generated on WahooPredict in under one week.</p>
-      <span class="pow-tag">WahooPredict · &lt;1 Week</span>
+      <p class="pow-desc">Direct and indirect referral volume generated on WahooPredict in under one week.</p>
+      <span class="pow-tag">WahooPredict · Under 1 Week</span>
     </div>
 
     <div class="pow-card sr" style="transition-delay:0.21s;">
-      <div class="pow-num">230 → 2,500+</div>
-      <p class="pow-desc">Grew Moxie AI community from 230 to 2,500+ members in under a month. Then rebuilt from 0 to 1,000+ in under 3 weeks after suspension.</p>
-      <span class="pow-tag">Moxie AI · Community Growth</span>
+      <div class="pow-num blue">45K+</div>
+      <p class="pow-desc">Impressions driven across 12+ AI projects through the Amplifi Creator Program.</p>
+      <span class="pow-tag">Amplifi · 12+ Projects</span>
     </div>
 
     <div class="pow-card sr" style="transition-delay:0.28s;">
-      <div class="pow-num blue">45K+</div>
-      <p class="pow-desc">Impressions driven across 12+ AI projects through the Amplifi Creator Program. 30+ total projects worked across Web3.</p>
-      <span class="pow-tag">Amplifi · 12+ AI Projects</span>
-    </div>
-
-    <div class="pow-card sr" style="transition-delay:0.35s;">
-      <div class="pow-num green">300%+</div>
-      <p class="pow-desc">Engagement driven for ArAIstotle in one week through X scouting. Also achieved 40% community engagement during one month moderating their Telegram. Worked with them for 8 months total.</p>
-      <span class="pow-tag">ArAIstotle · 8 Months</span>
-    </div>
-
-    <div class="pow-card sr" style="transition-delay:0.42s;">
       <div class="pow-num amber">55+</div>
       <p class="pow-desc">NFT collaborations secured for TheDefiantsDAO in just 6 months as Collab Manager.</p>
       <span class="pow-tag">TheDefiantsDAO · Collabs</span>
     </div>
 
-    <div class="pow-card sr" style="transition-delay:0.49s;">
-      <div class="pow-num">1,000+</div>
-      <p class="pow-desc">Community members rebuilt from scratch in under 3 weeks after a full Moxie AI community suspension, starting from zero.</p>
-      <span class="pow-tag">Moxie AI · Rebuild</span>
+    <div class="pow-card sr" style="transition-delay:0.35s;">
+      <div class="pow-num green">40%</div>
+      <p class="pow-desc">Community engagement achieved during one month of moderating ArAIstotle's Telegram. 8-month working relationship total.</p>
+      <span class="pow-tag">ArAIstotle · 8 Months</span>
     </div>
 
+  </div>
+
+  <!-- CASE STUDIES -->
+  <div style="margin-top:5rem;">
+    <div class="section-label sr" style="margin-bottom:1.5rem;">Featured Case Studies</div>
+    <div class="case-grid">
+
+      <div class="case-card sr">
+        <div class="case-label">Case Study 01</div>
+        <h3 class="case-title">Moxie AI</h3>
+        <div class="case-block">
+          <div class="case-step-label">Challenge</div>
+          <p class="case-text">The goal was not simply increasing member count. The focus was building a community where people felt heard, welcomed and valued from day one.</p>
+        </div>
+        <div class="case-block">
+          <div class="case-step-label">Approach</div>
+          <p class="case-text">I focused on making members feel heard and appreciated, actively listening to feedback and creating an environment where people felt comfortable speaking up and participating.</p>
+        </div>
+        <div class="case-block">
+          <div class="case-step-label">Results</div>
+          <div class="case-results">
+            <div class="case-result-item">
+              <span class="case-num">230 → 2,500+</span>
+              <span class="case-result-label">Members in under one month</span>
+            </div>
+            <div class="case-result-item">
+              <span class="case-num">0 → 1,000+</span>
+              <span class="case-result-label">Rebuilt in under 3 weeks after suspension</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card sr" style="transition-delay:0.1s;">
+        <div class="case-label">Case Study 02</div>
+        <h3 class="case-title">ArAIstotle</h3>
+        <div class="case-block">
+          <div class="case-step-label">Challenge</div>
+          <p class="case-text">The product needed more attention and people needed to understand what made its fact-checking capabilities different from existing tools.</p>
+        </div>
+        <div class="case-block">
+          <div class="case-step-label">Approach</div>
+          <p class="case-text">I put ArAIstotle in front of both believers and skeptics and created conversations around what the fact-checking bot could do, including comparisons with familiar tools like Grok and Perplexity. Instead of telling people the product was good, I focused on showing what it could actually do.</p>
+        </div>
+        <div class="case-block">
+          <div class="case-step-label">Results</div>
+          <div class="case-results">
+            <div class="case-result-item">
+              <span class="case-num">300%+</span>
+              <span class="case-result-label">Engagement increase in one week via X scouting</span>
+            </div>
+            <div class="case-result-item">
+              <span class="case-num">40%</span>
+              <span class="case-result-label">Community engagement in one month of Telegram moderation</span>
+            </div>
+            <div class="case-result-item">
+              <span class="case-num">8 months</span>
+              <span class="case-result-label">Working relationship with the team</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW I THINK ABOUT GROWTH -->
+<section class="process" id="process">
+  <div class="process-inner">
+    <div class="section-label sr">My Process</div>
+    <h2 class="sh"><span class="wipe">How I think</span><span class="wipe" style="animation-delay:0.15s;">about growth.</span></h2>
+    <p class="sr" style="transition-delay:0.1s;color:var(--muted);max-width:500px;margin-bottom:3rem;">Every project is different. This is how I approach each one.</p>
+    <div class="process-steps">
+      <div class="process-step sr">
+        <div class="process-num">01</div>
+        <div class="process-body">
+          <div class="process-title">Analyze</div>
+          <p class="process-desc">I start with the data. What's working? What isn't? Where are the gaps?</p>
+        </div>
+      </div>
+      <div class="process-step sr" style="transition-delay:0.08s;">
+        <div class="process-num">02</div>
+        <div class="process-body">
+          <div class="process-title">Research</div>
+          <p class="process-desc">I study the project, its audience, competitors and what others are doing differently.</p>
+        </div>
+      </div>
+      <div class="process-step sr" style="transition-delay:0.16s;">
+        <div class="process-num">03</div>
+        <div class="process-body">
+          <div class="process-title">Strategize</div>
+          <p class="process-desc">I identify opportunities and build a strategy around the project's actual strengths.</p>
+        </div>
+      </div>
+      <div class="process-step sr" style="transition-delay:0.24s;">
+        <div class="process-num">04</div>
+        <div class="process-body">
+          <div class="process-title">Experiment</div>
+          <p class="process-desc">I brainstorm unconventional ideas designed to cut through the noise.</p>
+        </div>
+      </div>
+      <div class="process-step sr" style="transition-delay:0.32s;">
+        <div class="process-num">05</div>
+        <div class="process-body">
+          <div class="process-title">Execute & Iterate</div>
+          <p class="process-desc">I execute, measure the results and adjust based on what the data tells us.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -635,8 +847,8 @@ footer span { color: var(--purple3); }
 <section class="services" id="services">
   <div class="services-header">
     <div class="section-label sr">Services</div>
-    <h2 class="sh"><span class="wipe">What I do</span><span class="wipe" style="animation-delay:0.15s;">for you.</span></h2>
-    <p class="sr" style="transition-delay:0.1s;">Four core skills. One goal: make your project grow with the right people around it.</p>
+    <h2 class="sh"><span class="wipe">What I bring</span><span class="wipe" style="animation-delay:0.15s;">to the table.</span></h2>
+    <p class="sr" style="transition-delay:0.1s;">Four core pillars. Built around what actually moves the needle for Web3 projects.</p>
   </div>
   <div class="acc-wrap">
 
@@ -653,70 +865,49 @@ footer span { color: var(--purple3); }
 
     <div class="ai">
       <button class="at" onclick="toggleA(this)">
-        <span class="at-left"><span class="aico">✍️</span> Content Strategy</span>
+        <span class="at-left"><span class="aico">✍️</span> Content & Growth Strategy</span>
         <span class="aarr">﹢</span>
       </button>
       <div class="ab"><div class="ab-inner">
-        <p>Web3-native content that converts: threads, narratives, project updates and campaigns built around what the data says and what the community responds to. I've driven 45K+ impressions across 12+ AI projects via Amplifi and worked with 30+ projects total. Zero filler. Zero generic posts.</p>
+        <p>Web3-native content that converts: threads, narratives, project updates and campaigns built around what the data says and what the community responds to. 45K+ impressions driven across 12+ AI projects via Amplifi. 30+ projects worked total. Zero filler. Zero generic posts.</p>
         <div class="tags"><span class="stag">Twitter/X</span><span class="stag">Threads</span><span class="stag">Narratives</span><span class="stag">Campaigns</span><span class="stag">Amplifi</span></div>
       </div></div>
     </div>
 
     <div class="ai">
       <button class="at" onclick="toggleA(this)">
-        <span class="at-left"><span class="aico">🤝</span> Collabs & Partnerships</span>
+        <span class="at-left"><span class="aico">🤝</span> Partnerships & KOLs</span>
         <span class="aarr">﹢</span>
       </button>
       <div class="ab"><div class="ab-inner">
-        <p>Identifying and closing strategic collaborations that expand reach. Secured 55+ NFT collabs for TheDefiantsDAO in 6 months. I know who to approach, how to pitch and how to make sure both sides win. Deep network across NFT, DeFi and AI agent communities.</p>
-        <div class="tags"><span class="stag">Outreach</span><span class="stag">BD</span><span class="stag">NFT Collabs</span><span class="stag">Partnerships</span><span class="stag">Deal Flow</span></div>
+        <p>I don't wait for partnerships. I hunt them. I scout promising projects and alpha opportunities, then proactively reach out through cold DMs, direct founder and CM outreach and existing relationships. My focus is finding collaborations that create value for both sides. Secured 55+ NFT collabs for TheDefiantsDAO in 6 months.</p>
+        <p style="margin-top:0.75rem;">Finding the right voices, building relationships and coordinating creators to put projects in front of the audiences that matter.</p>
+        <div class="tags"><span class="stag">Outreach</span><span class="stag">KOL Relations</span><span class="stag">NFT Collabs</span><span class="stag">Cold DMs</span><span class="stag">Creator Coordination</span></div>
       </div></div>
     </div>
 
     <div class="ai">
       <button class="at" onclick="toggleA(this)">
-        <span class="at-left"><span class="aico">📡</span> NFT Alpha & Onchain Research</span>
+        <span class="at-left"><span class="aico">📈</span> User Acquisition & Growth</span>
         <span class="aarr">﹢</span>
       </button>
       <div class="ab"><div class="ab-inner">
-        <p>Real-time NFT alpha, onchain intel and market research across ETH, Base and Solana. I spot what's moving before the crowd catches on and translate raw data into actionable community and content strategy.</p>
-        <div class="tags"><span class="stag">NFT Alpha</span><span class="stag">Onchain</span><span class="stag">Research</span><span class="stag">Base</span><span class="stag">Solana</span></div>
+        <p>Turning attention into actual users. I run referral programs, ambassador campaigns, quest campaigns (Zealy, TaskOn, Galxe) and targeted outreach to bring the right people into a project's ecosystem and keep them there. $500K+ referral volume on Virtuals Protocol. $10K+ on Wasabi Protocol.</p>
+        <div class="tags"><span class="stag">Referral Programs</span><span class="stag">Zealy</span><span class="stag">TaskOn</span><span class="stag">Ambassador Campaigns</span><span class="stag">Growth Loops</span></div>
       </div></div>
     </div>
 
-    <div class="ai">
-      <button class="at" onclick="toggleA(this)">
-        <span class="at-left"><span class="aico">✂️</span> Clipping</span>
-        <span class="aarr">﹢</span>
-      </button>
-      <div class="ab"><div class="ab-inner">
-        <p>Cutting long-form content: spaces, podcasts, AMAs and interviews, into sharp, scroll-stopping clips built for X and short-form feeds, for agencies and web3 founders who want their best moments to reach more people.</p>
-        <div class="tags"><span class="stag">Short-form</span><span class="stag">Clipping</span><span class="stag">X / Twitter</span><span class="stag">Agencies</span></div>
-      </div></div>
-    </div>
+  </div>
 
-    <div class="ai">
-      <button class="at" onclick="toggleA(this)">
-        <span class="at-left"><span class="aico">🌐</span> Ambassador & Creator</span>
-        <span class="aarr">﹢</span>
-      </button>
-      <div class="ab"><div class="ab-inner">
-        <p>Available for ambassador and creator roles. Currently WahooPredict Ambassador. Former HeyElsa Ambassador and AP Collective creator. I only rep projects I genuinely believe in: authentic voice, real reach and consistent output.</p>
-        <div class="tags"><span class="stag">Ambassador</span><span class="stag">Creator</span><span class="stag">WahooPredict</span><span class="stag">Multi-chain</span></div>
-      </div></div>
+  <!-- Additional capabilities -->
+  <div class="add-cap sr" style="transition-delay:0.2s;">
+    <div class="add-cap-label">Additional Capabilities</div>
+    <div class="add-cap-grid">
+      <div class="add-cap-item"><span>📡</span> NFT Alpha & Onchain Research</div>
+      <div class="add-cap-item"><span>✂️</span> Clipping for Agencies & Founders</div>
+      <div class="add-cap-item"><span>📊</span> Prediction Markets</div>
+      <div class="add-cap-item"><span>🌐</span> Ambassador & Creator Marketing</div>
     </div>
-
-    <div class="ai">
-      <button class="at" onclick="toggleA(this)">
-        <span class="at-left"><span class="aico">📈</span> Prediction Markets</span>
-        <span class="aarr">﹢</span>
-      </button>
-      <div class="ab"><div class="ab-inner">
-        <p>Active participant and growth operator in Web3 prediction markets. Generated $2K+ in referral volume on WahooPredict in under a week. I help prediction market projects grow their user base, drive volume and build communities around their platform.</p>
-        <div class="tags"><span class="stag">WahooPredict</span><span class="stag">Prediction Markets</span><span class="stag">Referrals</span><span class="stag">Growth</span></div>
-      </div></div>
-    </div>
-
   </div>
 </section>
 
@@ -724,9 +915,9 @@ footer span { color: var(--purple3); }
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
-  <div class="section-label sr" style="justify-content:center;">Get In Touch</div>
-  <h2 class="sr" style="transition-delay:0.1s;">Let's build something <em>real.</em></h2>
-  <p class="sr" style="transition-delay:0.2s;">Got a project that needs to grow? I'm available for community management, content strategy, collabs, ambassador roles and more. Let's talk.</p>
+  <div class="section-label sr" style="justify-content:center;">Work With Me</div>
+  <h2 class="sr" style="transition-delay:0.1s;">Building something <em>worth growing?</em></h2>
+  <p class="sr" style="transition-delay:0.2s;">If you have a good product and need someone who can help turn it into attention, community and growth, let's talk.</p>
   <div class="contact-links sr" style="transition-delay:0.3s;">
     <a href="https://x.com/boycryptbuild" class="clink" target="_blank">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.258 5.632 5.906-5.632Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -745,10 +936,13 @@ footer span { color: var(--purple3); }
       boycrrypt@gmail.com
     </a>
   </div>
-  <div class="calendly-box sr" style="transition-delay:0.4s;">
-    <div>📅</div>
-    <p><strong>Prefer a call?</strong> Book a time and let's talk about what you're building.</p>
-    <a href="https://calendly.com/boycryptt" target="_blank" class="btn-p">Book a Call →</a>
+  <div class="contact-cta-row sr" style="transition-delay:0.4s;">
+    <div class="calendly-box">
+      <div>📅</div>
+      <p><strong>Prefer a call?</strong> Book a time and let's talk about what you're building.</p>
+      <a href="https://calendly.com/boycryptt" target="_blank" class="btn-p">Book a Call</a>
+    </div>
+    <a href="https://x.com/boycryptbuild" target="_blank" class="btn-ghost" style="white-space:nowrap;">Reach me on X →</a>
   </div>
 </section>
 
@@ -758,24 +952,6 @@ footer span { color: var(--purple3); }
 </footer>
 
 <script>
-  /* Typewriter — cycles through roles */
-  const roles = ['versatile', 'community', 'growth', 'collab'];
-  let ri = 0, ci = 0, del = false;
-  const tw = document.getElementById('tw-target');
-  function type() {
-    const r = roles[ri];
-    if (!del) {
-      tw.textContent = r.slice(0, ++ci);
-      if (ci === r.length) { del = true; setTimeout(type, 1800); return; }
-      setTimeout(type, 80);
-    } else {
-      tw.textContent = r.slice(0, --ci);
-      if (ci === 0) { del = false; ri = (ri+1) % roles.length; setTimeout(type, 300); return; }
-      setTimeout(type, 40);
-    }
-  }
-  setTimeout(type, 700);
-
   /* Wipe reveal */
   const wo = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting){x.target.classList.add('go');wo.unobserve(x.target);} }), {threshold:0.2});
   document.querySelectorAll('.wipe').forEach(el => wo.observe(el));
